@@ -50,7 +50,11 @@ def register(request):
     if request.method == 'GET':
         return render(request, 'register.html')
     else:
-        UserInfo.objects.create(email=request.POST.get('email'),
+        email = request.POST.get('email')
+        info = UserInfo.objects.filter(email=email).first()
+        if info.email != '':
+            return render(request, 'register.html', {"msg": "This email is already exists"})
+        UserInfo.objects.create(email=email,
                                 password=md5_encrypt(request.POST.get('password')),
                                 age=request.POST.get('age'))
         return HttpResponse("done")
