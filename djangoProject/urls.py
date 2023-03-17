@@ -19,8 +19,8 @@ from FirstProgramme import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("index/", views.index),
-    path("userList/", views.user_list),
+    # path("index/", views.index),
+    # path("userList/", views.user_list),
     path("register/", views.register),
     path("login/", views.login),
 ]

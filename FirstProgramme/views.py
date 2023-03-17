@@ -2,6 +2,7 @@ import requests
 # Create your views here.
 from django.shortcuts import render, HttpResponse
 from FirstProgramme.models import UserInfo
+from hashlib import md5
 
 
 # def index(request):
@@ -36,8 +37,21 @@ def login(request):
             return render(request, 'login.html', {'msg': 'The password is incorrect'})
         return HttpResponse('done')
 
+
+def md5_encrypt(pwd: str):
+    salt = 'dnkjsna234adfa./'
+    method = md5(salt.encode('utf8'))
+    method.update(pwd.encode("utf8"))
+    encrypt_pwd = method.hexdigest()
+    return encrypt_pwd
+
+
 def register(request):
     if request.method == 'GET':
         return render(request, 'register.html')
     else:
-        pass
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        age = request.POST.get("age")
+        UserInfo.objects.create(email=email, password=md5_encrypt(password), age=age)
+        return HttpResponse("done")
