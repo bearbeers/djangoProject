@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static '/plugins/bootstrap-5.3.0/css/bootstrap.css' %}">
+</head>
+<body>
+    <div>UserList</div>
+    <label>
+        <input type="button" class="btn-outline-primary" value="new" />
+    </label>
+    <img src="{% static 'img/img.png' %}" alt="" style="height: 100px;width: 100px">
+    <div>{{ n1 }}</div>
+    <div>{{ n2 }}</div>
+    <div>{{ n3.1 }}</div>
+    {% for item in n3 %}
+        <span>{{ item }}</span>
+    {% endfor %}
+
+
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.js' %}"></script>
+</body>
+</html>
