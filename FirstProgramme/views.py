@@ -33,7 +33,7 @@ def login(request):
         a = UserInfo.objects.filter(email=email).first()
         if not a:
             return render(request, 'login.html', {'msg': 'This account does not exist'})
-        elif a.password != pwd:
+        elif a.password != md5_encrypt(pwd):
             return render(request, 'login.html', {'msg': 'The password is incorrect'})
         return HttpResponse('done')
 
@@ -52,9 +52,11 @@ def register(request):
     else:
         email = request.POST.get('email')
         info = UserInfo.objects.filter(email=email).first()
-        if info.email != '':
+        if info is not None:
             return render(request, 'register.html', {"msg": "This email is already exists"})
         UserInfo.objects.create(email=email,
-                                password=md5_encrypt(request.POST.get('password')),
-                                age=request.POST.get('age'))
+                                password=md5_encrypt(request.POST.get('pwd')),
+                                age=request.POST.get('age'),
+                                birth=request.POST.get('Date'),
+                                phone=request.POST.get('phone'))
         return HttpResponse("done")
