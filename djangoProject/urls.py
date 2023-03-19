@@ -23,4 +23,6 @@ urlpatterns = [
     # path("userList/", views.user_list),
     path("register/", views.register),
     path("login/", views.login),
+    path("userList/", views.user_list),
+    path("deleteUser/", views.delete_user),
 ]

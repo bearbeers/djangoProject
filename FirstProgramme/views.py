@@ -1,6 +1,6 @@
 import requests
 # Create your views here.
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from FirstProgramme.models import UserInfo
 from hashlib import md5
 
@@ -35,8 +35,13 @@ def login(request):
             return render(request, 'login.html', {'msg': 'This account does not exist'})
         elif a.password != md5_encrypt(pwd):
             return render(request, 'login.html', {'msg': 'The password is incorrect'})
-        return HttpResponse('done')
+        return redirect('/userList/')
 
+def user_list(request):
+    if request.method == 'GET':
+        return render(request, 'ListOfUser.html',  {'info': UserInfo.objects.all()})
+    else:
+        pass
 
 def md5_encrypt(pwd: str):
     salt = 'dnkjsna234adfa./'
@@ -57,6 +62,12 @@ def register(request):
         UserInfo.objects.create(email=email,
                                 password=md5_encrypt(request.POST.get('pwd')),
                                 age=request.POST.get('age'),
-                                birth=request.POST.get('Date'),
+                                dateofbirth=request.POST.get('Date'),
                                 phone=request.POST.get('phone'))
-        return HttpResponse("done")
+        return redirect('/login/')
+
+def delete_user(request):
+    nid = request.GET.get('nid')
+    UserInfo.objects.filter(id=nid).delete()
+    return redirect('/userList/')
+

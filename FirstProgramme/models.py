@@ -7,8 +7,8 @@ class UserInfo(models.Model):
     email = models.CharField(max_length=32)
     password = models.CharField(max_length=64)
     age = models.IntegerField()
-    birth = models.CharField(max_length=20, null=True, blank=True)
-    phone = models.CharField(max_length=11, blank=True)
+    dateofbirth = models.CharField(max_length=20, null=True, blank=True)
+    phone = models.CharField(blank=True, null=True, max_length=11)
     remark = models.CharField(null=True, blank=True, max_length=128)
 
 
